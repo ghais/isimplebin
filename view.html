@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/code_styles.css" />
+    <title> IsImplebIn </title>
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+      var pageTracker = _gat._getTracker("UA-71051-7");
+      pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
+  </head>
+  <body>
+    <div id="Header"><h1> IsImplebIn </h1> </div>
+    <div class="Content">
+      {{line}}
+      <form action="/update/{{id}}" method="post">
+        <textarea id="code" class="codeedit" rows="12" cols="80" name="content">
+{% for line in lines %}{{line.content|escape}}{% endfor %}</textarea>
+        <div><input type="submit" value="Update"></div>
+      </form>
+    </div>
+    <div id="navAlpha">
+      <h2>Last 10 posts</h2>
+      <p>
+       	{% for post in posts %}
+  	   {% if post.author %}
+  	       <b> <a href= {{post.key.id}}> {{ post.author.nickname }} </a> </b> <br>
+  	   {% else %}
+  	       <b> <a href = {{post.key.id}}> Anonymous </a> </b> <br>
+	   {% endif %}
+	{% endfor %}
+    </div>
+    <div id="navBeta">
+      <h2> <a href="{{ url }}">{{ url_linktext }}</a> </h2>
+    </div> 
+    <div id="navBeta2">
+      <h2> News</a> </h2>
+    </div> 
+  </body>
+</html>
