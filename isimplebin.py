@@ -67,7 +67,7 @@ class MainPage(webapp.RequestHandler):
             'url_linktext' : url_linktext
         }
 
-        path = os.path.join(os.path.dirname(__file__), 'index.html')
+        path = os.path.join(os.path.dirname(__file__), 'html/index.html')
         self.response.out.write(template.render(path, template_values))
 
 class Form(webapp.RequestHandler):
@@ -121,7 +121,7 @@ class Post(webapp.RequestHandler):
             'id' : self.request.uri.split("/")[-1],
         }
 
-        path = os.path.join(os.path.dirname(__file__), 'view.html')
+        path = os.path.join(os.path.dirname(__file__), 'html/view.html')
         self.response.out.write(template.render(path, template_values))
 
 application = webapp.WSGIApplication(
