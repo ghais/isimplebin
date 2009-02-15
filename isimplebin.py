@@ -101,6 +101,7 @@ class Post(webapp.RequestHandler):
             views.append({'content':lines[i] , 'i' : 'li'})
             if lines[i].find("@@") != -1:
                 highlighted.append(i + 1)
+        code = code.replace("@@", "")
         line = highlight(code, PythonLexer(), CodeHtmlFormatter(hl_lines=highlighted))
 
         template_values = {
@@ -108,10 +109,10 @@ class Post(webapp.RequestHandler):
             'lines' : views,
             'url' : url,
             'url_linktext' : url_linktext,
-            'line': line.replace("@@", ""),
+            'line': line,
             'id' : self.request.uri.split("/")[-1],
             'view' : view,
-            'expiry': view.expiry,
+            'expiry': view.expiry if view else None,
         }
         if view :
             path = os.path.join(os.path.dirname(__file__), 'html/view.html')
