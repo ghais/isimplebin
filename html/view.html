@@ -16,7 +16,7 @@
       {% else %}
 	{% if view.author %} {{view.author.nickname}}  {% else %} Anonymous {% endif %} wrote <br>
       {% endif %}
-      {{line}}
+      {{line}}      
       <form action="/update/{{id}}" method="post">
         <textarea id="code" class="codeedit" rows="12" cols="80" name="content">
 {% for line in lines %}{{line.content|escape}}{% endfor %}</textarea>

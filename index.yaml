@@ -22,7 +22,7 @@ indexes:
   - name: uuid
   - name: date
 
-# Used once in query history.
+# Used 195 times in query history.
 - kind: PostModel
   properties:
   - name: date
