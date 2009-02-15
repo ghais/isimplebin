@@ -2,23 +2,27 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     <title> IsImplebIn </title>
-    <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-      try {
-      var pageTracker = _gat._getTracker("UA-71051-7");
-      pageTracker._trackPageview();
-      } catch(err) {}
-    </script>
+    <script type="text/javascript" src="scripts/jquery.js"></script> 
+    <script type="text/javascript" src="scripts/isimplebin.js"></script>      
   </head>
-  <body>
+  <body onload="initPastebin()">
     <div id="Header"><h1> IsImplebIn </h1> </div>
     <div class="Content">
       <form action="/submit" method="post">
         <textarea id="code" class="codeedit" name="content" rows="12"></textarea>
+	<div id="expiryradios">
+        <label>How long should your post be retained?</label>
+	  <br/>
+	  <input id="expiry_day" type="radio" value="d" name="expiry"/>
+	  <label id="expiry_day_label" class="" for="expiry_day">a day</label>
+	  <input id="expiry_month" type="radio" checked="checked" value="m" name="expiry"/>
+	  <label id="expiry_month_label" class="" for="expiry_month">a month</label>
+	  <input id="expiry_forever" type="radio" value="f" name="expiry"/>
+	  <label id="expiry_forever_label" class="current" for="expiry_forever">forever</label>
+	</div>
+	<div id="expiryinfo"></div>
         <div><input type="submit" value="Paste"></div>
+	
       </form>
     </div>
     <div id="navAlpha">

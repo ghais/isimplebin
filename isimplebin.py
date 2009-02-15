@@ -1,5 +1,5 @@
 import cgi
-
+import logging
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -11,42 +11,15 @@ import uuid
 import os
 from pygments import highlight
 from pygments.lexers import PythonLexer
-from pygments.formatters import HtmlFormatter
-
-
-class CodeHtmlFormatter(HtmlFormatter):
-
-    def wrap(self, source, outfile):
-        return self._wrap_code(self._wrap_div(self._wrap_pre(source)))
-
-    def _wrap_code(self, source):
-        yield 0, '<ol class="highlight">' 
-        for i, t in source:
-            if i == 1:
-                # it's a line of formatted code
-                t = "<li>" + t + "</li>"
-            yield i, t
-        yield 0, '</ol>'
-        
-    def _wrap_div(self, inner):
-        yield 0, ('<div' + (self.cssclass and ' class="%s"' % self.cssclass)
-                  + (self.cssstyles and ' style="%s"' % self.cssstyles) + '>')
-        for tup in inner:
-            yield tup
-        yield 0, '</div>\n'
-
-    def _wrap_pre(self, inner):
-        yield 0, ('<pre'
-                  + (self.prestyles and ' style="%s"' % self.prestyles) + '>')
-        for tup in inner:
-            yield tup
-        yield 0, '</pre>'
-
+from formater import CodeHtmlFormatter
 
 class PostModel(db.Model):
     author = db.UserProperty()
     content = db.TextProperty()
     date = db.DateTimeProperty(auto_now_add=True)
+    modified = db.BooleanProperty()
+    modifier = db.UserProperty()
+    expiry = db.DateTimeProperty()
 
 
 class MainPage(webapp.RequestHandler):
@@ -77,6 +50,8 @@ class Form(webapp.RequestHandler):
             post_model.author = users.get_current_user()
 
         post_model.content = self.request.get('content')
+        post_model.modified = False
+        post_model.modifier = None
         post_model.save()
         self.redirect('/' + str(post_model.key().id()))
 
@@ -86,14 +61,23 @@ class Update(webapp.RequestHandler):
         view = PostModel.get_by_id(int(self.request.uri.split("/")[-1]))
         content = self.request.get('content')        
         view.content = content
+        view.modified = True
+        if users.get_current_user():
+            view.modifier = users.get_current_user()
+        else:
+            view.modifier = None
         view.save()
         self.redirect('/' + db_id)
 
 class Post(webapp.RequestHandler):
     def get(self):
+        logging.debug("Hello world")
         posts_query = PostModel().all().order('-date')
-        posts = posts_query.fetch(10)   
-        view = PostModel.get_by_id(int(self.request.uri.split("/")[-1]))
+        posts = posts_query.fetch(10)
+        try:
+            view = PostModel.get_by_id(int(self.request.uri.split("/")[-1]))
+        except ValueError:
+            view = None
 
         if users.get_current_user():
             url = users.create_logout_url(self.request.uri)
@@ -102,26 +86,34 @@ class Post(webapp.RequestHandler):
             url = users.create_login_url(self.request.uri)
             url_linktext = 'Login'
 
-
-        lines = view.content.split("\n")
-        views = []
+        if view:
+            code = view.content
+            lines = view.content.split("\n")
+        else:
+            code = ""
+            lines = []
         highlighted = []
+        views = []
         for i in xrange(len(lines)):
             views.append({'content':lines[i] , 'i' : 'li'})
             if lines[i].find("@@") != -1:
                 highlighted.append(i + 1)
-        line = highlight(view.content, PythonLexer(), CodeHtmlFormatter(hl_lines=highlighted))
+        line = highlight(code, PythonLexer(), CodeHtmlFormatter(hl_lines=highlighted))
 
         template_values = {
             'posts' : posts,
             'lines' : views,
             'url' : url,
             'url_linktext' : url_linktext,
-            'line': line.replace("@@", "  "),
+            'line': line.replace("@@", ""),
             'id' : self.request.uri.split("/")[-1],
+            'view' : view,
         }
-
-        path = os.path.join(os.path.dirname(__file__), 'html/view.html')
+        if view :
+            path = os.path.join(os.path.dirname(__file__), 'html/view.html')
+        else :
+            path = os.path.join(os.path.dirname(__file__), 'html/404.html')
+            
         self.response.out.write(template.render(path, template_values))
 
 application = webapp.WSGIApplication(
@@ -132,7 +124,9 @@ application = webapp.WSGIApplication(
     debug=True)
 
 def main():
+    logging.getLogger().setLevel(logging.DEBUG)
     run_wsgi_app(application)
+    logging.debug("Hello world")
 
 if __name__ == "__main__":
     main()
