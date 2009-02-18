@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <title> IsImplebIn </title>
+  </head>
+  <body>
+    <!--<div id="Content"> <h1> Pastebin </h1> </div> -->
+    <div id="Header"><a href="{{ url }}">{{ url_linktext }}</a></div>
+  
+  
+    <div class="Content">
+      <form action="/submit" method="post">
+        <div><textarea name="content" rows="10" cols="120"></textarea></div>
+        <div><input type="submit" value="Paste"></div>
+      </form>
+    </div>
+    <div id="navAlpha">
+      <h2>Last 10 posts</h2>
+      {{type}}
+        <p>
+       	  {% for post in posts %}
+  	    {% if post.author %}
+  	      <b> {{ post.author.nickname }} </b>
+  	    {% else %}
+  	      <b> anonymous</b> 
+	    {% endif %}
+	  {% endfor %}
+      </p>
+    </div>
+    <div id="navBeta">
+      <h2> stuff </h2>
+    </div> 
+  </body>
+</html>

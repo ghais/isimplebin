@@ -2,7 +2,6 @@
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     <link type="text/css" rel="stylesheet" href="/stylesheets/code_styles.css" />
-    <script type="text/javascript" src="script/jquery.js"></script>
     <script type="text/javascript">
      
     </script>
@@ -12,9 +11,16 @@
     <div id="Header"><h1> IsImplebIn </h1> </div>
     <div class="Content">
       {% if view.modified %}
-	{% if view.modifier %} {{view.modifier.nickname}} {% else %} Anonymous {% endif %} wrote (modified from {{view.author}})<br>
+	<div id="InnerHeader">
+	<a href= "download?v=c&id={{view.key.id}}"> Download </a> |
+	<a href= "download?v=o&id={{view.key.id}}"> Orignal </a> |	
+	<a href= "download?v=d&id={{view.key.id}}"> Diff </a> 
+	<br>
+  	{% if view.modifier %} {{view.modifier.nickname}} {% else %} Anonymous {% endif %} wrote (modified from {{view.author}})
+  	</div>
       {% else %}
-	{% if view.author %} {{view.author.nickname}}  {% else %} Anonymous {% endif %} wrote <br>
+	   {% if view.author %} {{view.author.nickname}}  {% else %} Anonymous {% endif %} wrote <br>
+	  
       {% endif %}
       {{line}}      
       <form action="/update/{{id}}" method="post">

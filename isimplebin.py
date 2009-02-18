@@ -6,7 +6,6 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import template
 from datetime import datetime
 from datetime import timedelta
-import uuid
 import os
 from pygments import highlight
 from pygments.lexers import PythonLexer
@@ -53,6 +52,7 @@ class Form(webapp.RequestHandler):
             post_model.expiry = None
         
         post_model.content = self.request.get('content')        
+        post_model.old_content = None
         post_model.modified = False
         post_model.modifier = None
         post_model.save()
@@ -63,6 +63,7 @@ class Update(webapp.RequestHandler):
         db_id = self.request.uri.split("/")[-1]
         view = PostModel.get_by_id(int(self.request.uri.split("/")[-1]))
         content = self.request.get('content')
+        view.old_content = view.content
         view.content = content
         view.modified = True
         if users.get_current_user():
@@ -113,6 +114,7 @@ class Post(webapp.RequestHandler):
             'id' : self.request.uri.split("/")[-1],
             'view' : view,
             'expiry': view.expiry if view else None,
+            'download_link' : "download/" + str(view.key().id()) if view else ''
         }
         if view :
             path = os.path.join(os.path.dirname(__file__), 'html/view.html')
@@ -121,10 +123,31 @@ class Post(webapp.RequestHandler):
             
         self.response.out.write(template.render(path, template_values))
 
+class Download(webapp.RequestHandler):
+    def get(self):
+	db_id = self.request.get('id')
+	v = self.request.get('v')
+	
+	self.response.out.write(v)
+	self.response.headers['Content-Type'] = 'text/plain'
+	self.response.headers['Content-Disposition'] =  'attachment; filename=' + db_id + '.txt'
+	view = PostModel.get_by_id(int(db_id))
+	if v == 'c':
+	    self.response.out.write(view.content)
+	elif v == 'o':
+	    self.response.out.write(view.old_content)
+	elif v == 'd':
+	    #self.redirect('/diff/' + str(view.key().id()))
+	    self.redirect('/' + str(view.key().id()))
+	else:
+	    self.response.out.write('foooooooooooo you')    
+
+        
 application = webapp.WSGIApplication(
     [('/', MainPage),
      ('/submit', Form),
      ('/update/.*', Update),
+     ('/download.*?.*', Download),
      ('/.*', Post )],
     debug=True)
 

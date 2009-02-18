@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <title> IsImplebIn </title>
+  </head>
+  <body>
+      <div id="Header"><h1> Page Not Found 404 </h1> </div>	
+      <div class="Content">
+    The page you are looking for doesn't exist.  But more importantly, by observing proof of this page not existing, you've interrupted an experiment in quantum mechanics, collapsed our probability wave and caused our work to be laid waste utterly.  We thought we could test Schoedinger's theories online, without any cute wittle kitties being hurt.  We didn't think anyone would ever think of testing whether or not the page "<!--#echo var="REQUEST_URI" -->" existed on this server.  But no, <i>you</i> had to prove us wrong.  Well, you can bet we'll be passing your name on to PETA when they protest, pal!<br>
+    <br>
+    You brought this on yourself.<br>
+
+    <br>
+    In the meantime, all the usual stuff applies:
+      <ul>
+
+      <li>if you typed the address yourself, check to make sure it's correct.  URLs are case-sensitive.</li>
+      <li>if you followed a link here, please tell the webmaster where it was.</li>
+      <li>try finding what you're looking for at the <a href="/">main page</a></li>
+      </ul>
+      <script type="text/javascript">
+        var GOOG_FIXURL_LANG = 'en';
+        var GOOG_FIXURL_SITE = 'http://isimplebin.ghais.info/';
+      </script>
+      <script type="text/javascript" 
+	  src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
+    </div>
+   <div id="navAlpha">
+      <h2>Last 10 posts</h2>
+      <p>
+       	{% for post in posts %}
+  	   {% if post.author %}
+  	       <b> <a href= {{post.key.id}}> {{ post.author.nickname }} </a> </b> <br>
+  	   {% else %}
+  	       <b> <a href = {{post.key.id}}> Anonymous </a> </b> <br>
+	   {% endif %}
+	{% endfor %}
+    </div>
+    <div id="navBeta">
+      <h2> <a href="/"> Create New Post </a> </h2>
+      <h2> <a href="{{ url }}">{{ url_linktext }}</a> </h2>
+    </div> 
+    <div id="navBeta2">
+      <h2> News </h2>
+    </div> 
+  </body>
+</html>
