@@ -10,6 +10,9 @@ handlers:
 - url: /scripts
   static_dir: scripts
 
+- url: /download
+  static_dir: download
+
 - url: /favicon\.ico
   static_files: static/favicon.ico
   upload: static/favicon.ico

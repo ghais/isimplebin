@@ -8,12 +8,12 @@
   <body onload="initPastebin()">
     <div id="Header"><h1> IsImplebIn </h1> </div>
     <div class="Content">
-      <form action="/submit" method="post">
-        <textarea id="code" class="codeedit" name="content" rows="12"></textarea>
+      <form method="post" enctype="multipart/form-data" action="/uploadaction">
+        Enter file: <input type="file" name="sendfile" size="40">
 	<div id="expiryradios">
-        <label>How long should your post be retained?</label>
+	  <label>How long should your post be retained?</label>
 	  <br/>
-	  <input id="expiry_day" type="radio" value="d" name="expiry"/>
+	  <input id="expiry_day" type="radio" value="d" name="expiry"/> 
 	  <label id="expiry_day_label" class="" for="expiry_day">a day</label>
 	  <input id="expiry_month" type="radio" checked="checked" value="m" name="expiry"/>
 	  <label id="expiry_month_label" class="" for="expiry_month">a month</label>
@@ -21,8 +21,7 @@
 	  <label id="expiry_forever_label" class="current" for="expiry_forever">forever</label>
 	</div>
 	<div id="expiryinfo"></div>
-        <div><input type="submit" value="Paste"></div>
-	
+        <input type="submit" value="upload" name="submit">
       </form>
     </div>
     <div id="navAlpha">

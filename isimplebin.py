@@ -41,16 +41,16 @@ class Form(webapp.RequestHandler):
         if users.get_current_user():
             post_model.author = users.get_current_user()
 
-            
+
         post_expiry = self.request.get('expiry')
-        
+
         if post_expiry == 'd':
             post_model.expiry = datetime.now()  + timedelta(days=1)
         elif post_expiry == 'm':
             post_model.expiry = datetime.now()  + timedelta(days=1)
         elif post_expiry == 'f':
             post_model.expiry = None
-        
+
         post_model.content = self.request.get('content')        
         post_model.old_content = None
         post_model.modified = False
@@ -58,6 +58,29 @@ class Form(webapp.RequestHandler):
         post_model.save()
         self.redirect('/' + str(post_model.key().id()))
 
+        
+class Upload(webapp.RequestHandler):
+    def get(self):
+        posts_query = PostModel().all().order('-date')
+        posts = posts_query.fetch(10)   
+
+        if users.get_current_user():
+            url = users.create_logout_url(self.request.uri)
+            url_linktext = "Logout"
+        else:
+            url = users.create_login_url(self.request.uri)
+            url_linktext = "Login"
+
+        template_values = {
+            'posts' : posts,
+            'url' : url,
+            'url_linktext' : url_linktext
+        }
+
+        path = os.path.join(os.path.dirname(__file__), 'html/upload.html')
+        self.response.out.write(template.render(path, template_values))
+        
+        
 class Update(webapp.RequestHandler):
     def post(self):
         db_id = self.request.uri.split("/")[-1]
@@ -72,6 +95,30 @@ class Update(webapp.RequestHandler):
             view.modifier = None
         view.save()
         self.redirect('/' + db_id)
+        
+class Upload_Action(webapp.RequestHandler):
+    def post(self):
+        post_model = PostModel()
+        if users.get_current_user():
+            post_model.author = users.get_current_user()
+
+
+        post_expiry = self.request.get('expiry')
+
+        if post_expiry == 'd':
+            post_model.expiry = datetime.now()  + timedelta(days=1)
+        elif post_expiry == 'm':
+            post_model.expiry = datetime.now()  + timedelta(days=1)
+        elif post_expiry == 'f':
+            post_model.expiry = None
+
+        post_model.content = self.request.get('sendfile')        
+        post_model.old_content = None
+        post_model.modified = False
+        post_model.modifier = None
+        post_model.save()
+        self.redirect('/' + str(post_model.key().id()))
+        
 
 class Post(webapp.RequestHandler):
     def get(self):
@@ -120,34 +167,36 @@ class Post(webapp.RequestHandler):
             path = os.path.join(os.path.dirname(__file__), 'html/view.html')
         else :
             path = os.path.join(os.path.dirname(__file__), 'html/404.html')
-            
+
         self.response.out.write(template.render(path, template_values))
 
 class Download(webapp.RequestHandler):
     def get(self):
-	db_id = self.request.get('id')
-	v = self.request.get('v')
-	
-	self.response.out.write(v)
-	self.response.headers['Content-Type'] = 'text/plain'
-	self.response.headers['Content-Disposition'] =  'attachment; filename=' + db_id + '.txt'
-	view = PostModel.get_by_id(int(db_id))
-	if v == 'c':
-	    self.response.out.write(view.content)
-	elif v == 'o':
-	    self.response.out.write(view.old_content)
-	elif v == 'd':
-	    #self.redirect('/diff/' + str(view.key().id()))
-	    self.redirect('/' + str(view.key().id()))
-	else:
-	    self.response.out.write('foooooooooooo you')    
+        db_id = self.request.get('id')
+        v = self.request.get('v')
 
-        
+        self.response.out.write(v)
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.headers['Content-Disposition'] =  'attachment; filename=' + db_id + '.txt'
+        view = PostModel.get_by_id(int(db_id))
+        if v == 'c':
+            self.response.out.write(view.content)
+        elif v == 'o':
+            self.response.out.write(view.old_content)
+        elif v == 'd':
+            #self.redirect('/diff/' + str(view.key().id()))
+            self.redirect('/' + str(view.key().id()))
+        else:
+            self.response.out.write('foooooooooooo you')    
+
+
 application = webapp.WSGIApplication(
     [('/', MainPage),
+     ('/download.*?.*', Download),
      ('/submit', Form),
      ('/update/.*', Update),
-     ('/download.*?.*', Download),
+     ('/upload', Upload),
+     ('/uploadaction', Upload_Action),
      ('/.*', Post )],
     debug=True)
 
