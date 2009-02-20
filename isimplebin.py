@@ -122,7 +122,6 @@ class Upload_Action(webapp.RequestHandler):
 
 class Post(webapp.RequestHandler):
     def get(self):
-        logging.debug("Hello world")
         posts_query = PostModel().all().order('-date')
         posts = posts_query.fetch(10)
         try:

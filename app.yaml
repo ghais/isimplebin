@@ -21,5 +21,9 @@ handlers:
 - url: /admin
   script: admin.py
 
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+
 - url: /.*
   script: isimplebin.py
