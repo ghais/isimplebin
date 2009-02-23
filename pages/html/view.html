@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block rightbar %}
+    <a href="{{ url }}">{{ url_linktext }}</a>
+    |
+    <a href="help"> help </a>
+{% endblock %}
+
+{% block content %}
+    <div id="Header">
+      <div id="leftbar">
+        
+          <button type="button" class="btn" onclick="window.location = '/'">
+            <span><span>new post</span></span>
+          </button>
+          <button type="button" class="btn" onclick="window.location = 'download/{{paste.paste_key}}?v=c'">
+            <span><span>download current </span></span>
+          </button>
+          <button type="button" class="btn" onclick="window.location = 'download/{{paste.paste_key}}'?v=o">
+            <span><span>download original</span></span>
+          </button>
+          <button type="button" class="btn" onclick="window.location = 'revision/{{paste.paste_key}}'">
+            <span><span>Other Revisions</span></span>
+          </button>
+          <button type="button" class="btn" onclick="window.location = 'diff/{{paste.paste_key}}'">
+            <span><span>Diff</span></span>
+          </button>
+          <select>
+            <option selected="selected">General</option>
+            <option>None</option>
+            <option>ActionScript</option>
+            <option>AppleScript</option>
+            <option>Assembly (various)</option>
+            <option>Boo</option>
+            <option>Befunge</option>
+        
+            <option>BrainFuck</option>
+            <option>C</option>
+            <option>C++</option>
+            <option>C#</option>
+            <option>Clojure</option>
+            <option>Common Lisp</option>
+            <option>D</option>
+        
+            <option>Delphi</option>
+            <option>Dylan</option>
+            <option>Erlang</option>
+            <option>Fortran</option>
+            <option>Haskell</option>
+        
+            <option>Io</option>
+            <option>Java</option>
+            <option>JavaScript</option>
+            <option>Logtalk</option>
+            <option>Lua</option>
+            <option>Matlab</option>
+        
+            <option>MiniD</option>
+            <option>MooCode</option>
+            <option>MuPad</option>
+            <option>OCaml</option>
+            <option>PHP</option>
+            <option>Perl</option>
+        
+            <option>Redcode</option>
+            <option>S, S-Plus, R</option>
+            <option>Scala</option>
+        
+            <option>Scheme</option>
+            <option>Smalltalk</option>
+            <option>Tcl</option>
+            <option>Visual Basic.NET</option>
+            <option disabled="disabled">--Template languages--</option>
+            <option>Cheetah templates</option>
+            <option>templates</option>
+            <option>ERB (Ruby templating)</option>
+            <option>Genshi</option>
+        
+            <option>Myghty</option>
+            <option>Mako</option>
+            <option>templates (PHP templating)</option>
+            <option>JSP (Java Server Pages)</option>
+        
+          <option disabled="disabled">--Other markup--</option>
+            <option>Apache config files</option>
+            <option>Bash shell scripts</option>
+            <option>BBCode</option>
+        
+            <option>CSS</option>
+            <option>Debian control files</option>
+            <option>Diff files</option>
+            <option>Gettext catalogs</option>
+            <option>Gnuplot script</option>
+            <option>Groff markup</option>
+        
+            <option>HTML</option>
+            <option>INI-style config files</option>
+            <option>IRC logs (irssi style)</option>
+            <option>Lighttpd config files</option>
+            <option>Makefiles</option>
+            <option>MoinMoin/Trac Wiki markup</option>
+        
+            <option>Nginx config files</option>
+            <option>POV-Ray scenes</option>
+            <option>Redcode</option>
+            <option>ReST</option>
+            <option>SQL, also MySQL, SQLite</option>
+            <option>Squid configuration</option>
+        
+            <option>TeX</option>
+            <option>tcsh</option>
+            <option>Vim Script</option>
+            <option>Windows batch files</option>
+            <option>XML</option>
+            <option>XSLT</option>
+        
+            <option>YAML</option> 
+          </select>
+          
+
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="who">
+      {% if paste.previous %}
+        {% if paste.author %}
+          {{ paste.author.user.nickname }} wrote (Previously by 
+          {% if original.author.user %}          
+            {{ original.author.user.nickname }})
+          {% else %}
+            Anonymous)
+          {% endif %}
+        {% else %}
+          Anonymous wrote (Previously by 
+          {% if original.author %}          
+            {{ orignal.author.user.nickname }})
+          {% else %}
+            Anonymous)
+          {% endif %}
+        {% endif %}
+      {% else %}
+          {% if paste.author %}
+            {{ paste.author.user.nickname }} wrote
+          {% else %}
+            Anonymous wrote
+          {% endif %}
+      {% endif %}      
+    </div>  
+    <div class = "code">
+      {{ code }}
+    </div>
+    <div class="code">
+      <form action="/update/{{paste.paste_key}}" method="post">
+         <textarea id="code" class="codeedit" rows="12" cols="80" name="content">
+{% for line in lines %}{{line|escape}}
+{% endfor %}</textarea>
+         <div><input type="submit" value="Update"></div>
+      </form>
+    </div>      
+{% endblock %}

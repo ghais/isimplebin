@@ -8,23 +8,7 @@
   <body onload="initPastebin()">
     <div id="Header"><h1> IsImplebIn </h1> </div>
     <div class="Content">
-      <form action="/submit" method="post">
-        <textarea id="code" class="codeedit" name="content" rows="12"></textarea>
-	<div id="expiryradios">
-        <label>How long should your post be retained?</label>
-	  <br/>
-	  <input id="expiry_day" type="radio" value="d" name="expiry"/>
-	  <label id="expiry_day_label" class="" for="expiry_day">a day</label>
-	  <input id="expiry_month" type="radio" checked="checked" value="m" name="expiry"/>
-	  <label id="expiry_month_label" class="" for="expiry_month">a month</label>
-	  <input id="expiry_forever" type="radio" value="f" name="expiry"/>
-	  <label id="expiry_forever_label" class="current" for="expiry_forever">forever</label>
-	</div>
-	<div id="expiryinfo"></div>
-        <div><input type="submit" value="Paste"></div>
-	
-      </form>
-      <script type="text/javascript"><!--
+      <center> <script type="text/javascript"><!--
 	google_ad_client = "pub-5703976649241693";
 	/* Essentials Only */
 	google_ad_slot = "4363471771";
@@ -34,28 +18,41 @@
       </script>
       <script type="text/javascript"
 	      src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-      </script>
-
+      </script> </center>
+      <form action="/submit" method="post">
+        <textarea id="code" class="codeedit" name="content" rows="12"></textarea>
+	<div id="expiryradios">
+        <label>How long should your paste be retained?</label>
+	  <br/>
+	  <input id="expiry_day" type="radio" value="d" name="expiry"/>
+	  <label id="expiry_day_label" class="" for="expiry_day">a day</label>
+	  <input id="expiry_month" type="radio" checked="checked" value="m" name="expiry"/>
+	  <label id="expiry_month_label" class="" for="expiry_month">a month</label>
+	  <input id="expiry_forever" type="radio" value="f" name="expiry"/>
+	  <label id="expiry_forever_label" class="current" for="expiry_forever">forever</label>
+	</div>
+	<div id="expiryinfo"></div>
+        <div><input type="submit" value="Paste"></div>	
+      </form>
     </div>
-    <div id="navAlpha">
-      <h2>Last 10 posts</h2>
-      {{type}}
+    <div id="navBeta">
+      <h3>Last 10 pastes</h3>
         <p>
-       	  {% for post in posts %}
-  	    {% if post.author %}
-  	      <b> <a href= {{post.key.id}}> {{ post.author.nickname }} </a> </b> <br>
+       	  {% for paste in pastes %}
+  	    {% if paste.author.user %}
+  	      <b> <a href= {{paste.key.id}}> {{ paste.author.user.nickname }} </a> </b> <br>
   	    {% else %}
-  	       <b> <a href= {{post.key.id}}> Anonymous </a> </b> <br>
+  	       <b> <a href= {{paste.key.id}}> Anonymous </a> </b> <br>
 	    {% endif %}
 	  {% endfor %}
         </p>
     </div>
-    <div id="navBeta">
+    <div id="navAlpha">
       <h2> <a href="upload"> Upload a file </a> </h2>
-      <h2> <a href="download/Pasteit-0.1.tar.gz"> Command line isimplebin </a> </h2>
+      <h2> <a href="downloads/Pasteit-0.1.tar.gz"> Command line isimplebin </a> </h2>
+      <h2> <a href="mypastes"> My Pastes </a> </h2>
       <h2> <a href="{{ url }}">{{ url_linktext }}</a> </h2>
-    </div> 
-    <div id="navBeta2">
-    </div> 
+    </div>   
+
   </body>
 </html>

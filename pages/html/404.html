@@ -19,25 +19,25 @@
       <li>if you followed a link here, please tell the webmaster where it was.</li>
       <li>try finding what you're looking for at the <a href="/">main page</a></li>
       </ul>
+    </div>
       <script type="text/javascript">
         var GOOG_FIXURL_LANG = 'en';
         var GOOG_FIXURL_SITE = 'http://isimplebin.ghais.info/';
       </script>
       <script type="text/javascript" 
 	  src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
-    </div>
-   <div id="navAlpha">
+   <div id="navBeta">
       <h2>Last 10 posts</h2>
       <p>
        	{% for post in posts %}
-  	   {% if post.author %}
-  	       <b> <a href= {{post.key.id}}> {{ post.author.nickname }} </a> </b> <br>
+  	   {% if post.author.user %}
+  	       <b> <a href= {{post.key.id}}> {{ post.author.user.nickname }} </a> </b> <br>
   	   {% else %}
   	       <b> <a href = {{post.key.id}}> Anonymous </a> </b> <br>
 	   {% endif %}
 	{% endfor %}
     </div>
-    <div id="navBeta">
+    <div id="navAlpha">
       <h2> <a href="/"> Create New Post </a> </h2>
       <h2> <a href="{{ url }}">{{ url_linktext }}</a> </h2>
     </div> 

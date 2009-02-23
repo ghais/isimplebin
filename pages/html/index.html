@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block rightbar %}
+    <a href="{{ url }}">{{ url_linktext }}</a>
+    |
+    <a href="help"> help </a>
+{% endblock %}
+
+{% block content %}
+     <form action="/submit" method="post">
+        <textarea id="code" class="codeedit" name="content" rows="12"></textarea>
+	<div id="expiryradios">
+        <label>How long should your paste be retained?</label>
+	  <br/>
+	  <input id="expiry_day" type="radio" value="d" name="expiry"/>
+	  <label id="expiry_day_label" class="" for="expiry_day">a day</label>
+	  <input id="expiry_month" type="radio" checked="checked" value="m" name="expiry"/>
+	  <label id="expiry_month_label" class="" for="expiry_month">a month</label>
+	  <input id="expiry_forever" type="radio" value="f" name="expiry"/>
+	  <label id="expiry_forever_label" class="current" for="expiry_forever">forever</label>
+	</div>
+	<div id="expiryinfo"></div>
+        <div><input type="submit" value="Paste"></div>	
+      </form>
+{% endblock %}

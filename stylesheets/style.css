@@ -1,0 +1,210 @@
+body {
+	color:#333;
+	background-color: #eee;
+	font:11px verdana, arial, helvetica, sans-serif;
+	}
+
+a {
+	color:#4263AB !important;
+}
+
+#Header {
+	/* For IE5/Win's benefit height = [correct height] + [top padding] + [top and bottom border widths] */
+	height:auto; /* 14px + 17px + 2px = 33px */
+	border-style:hidden;
+	background-color:#eee;
+	margin : 0px, 0px, 20px, 0px;
+/* Here is the ugly brilliant hack that protects IE5/Win from its own stupidity. 
+Thanks to Tantek Celik for the hack and to Eric Costello for publicizing it. 
+IE5/Win incorrectly parses the "\"}"" value, prematurely closing the style 
+declaration. The incorrect IE5/Win value is above, while the correct value is 
+below. See http://glish.com/css/hacks.asp for details. */
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	height : auto;
+	}
+
+body>#Header {height : 30px;}
+
+#leftbar {
+	float : left;
+	width : auto;
+	}
+	
+#rightbar {
+	float : right;
+	width : auto;
+	}
+
+#leftNav {
+	position:relative;
+	top:0px;
+	float : left;
+	background-color:#eee;
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	width: auto;
+	min-width: 120
+	z-index : 0;
+}
+
+#rightNav {
+	position:relative;
+	top:0px;
+	float : right;
+	background-color:#eee;
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	width: 120;
+	z-index : 0;
+}
+
+.all {
+	position:relative; /* Position is declared "relative" to gain control of stacking order (z-index). */
+  	min-width : 900px;
+	height : 100%;
+	width : 99%;
+	z-index : 3;
+	}
+.content {
+	position : relative;
+	width : auto;
+	height: 99%;
+	margin : 0px 122px 0px 122px;
+	background-color:#eee;		
+	z-index : 3;
+}
+
+.inner_content {
+	position : relative;
+	height : 99%;
+	background-color:#eee;
+	z-index: 3;
+}
+
+
+code { font-size:12px;width:99%;}
+
+.codeedit {
+	font-size:12px;
+	width:99%;
+	border: 2px solid #69748C;	
+}
+
+.who {
+	font-size:12px;
+	width:99%;
+	border: 2px solid #69748C;	
+	text-align : lef;
+	
+}
+
+
+.text .de1, .text .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;}
+.text  {font-family: monospace;}
+.text .imp {font-weight: bold; color: red;}
+.text li {background: #ffffff;}
+.text li.li2 {background: #f8f8f8;}
+
+#goog-wm h3.closest-match {
+  position: relative;
+  width: auto;
+  padding-bottom: 0.5em;;
+  font-size: 170%;
+  margin: 0;
+}
+
+#goog-wm h3.closest-match a { }
+   
+#goog-wm h3.other-things {
+
+}
+   
+#goog-wm ul li { }
+   
+#goog-wm li.search-goog {
+  position: relative;
+  width: auto;
+  z-index: 3
+}
+
+
+/* Start custom button CSS here
+    ---------------------------------------- */
+    .btn {
+      display:inline-block;
+      background:none;
+      margin:0;
+      padding:3px 0;
+      border-width:0;
+      overflow:visible;
+      font:100%/1.2 Arial,Sans-serif;
+      text-decoration:none;
+      color:#333;
+      }
+    * html button.btn {
+      padding-bottom:1px;
+      }
+    /* Immediately below is a temporary hack to serve the 
+       following margin values only to Gecko browsers
+       Gecko browsers add an extra 3px of left/right 
+       padding to button elements which can't be overriden.
+       Thus, we use -3px of left/right margin to overcome this. */
+    html:not([lang*=""]) button.btn {
+      margin:0 -3px;
+      }
+    .btn span {
+      background:#ddd url(img/bg-button.gif) repeat-x 0 0;
+      margin:0;
+      padding:3px 0;
+      border-left:1px solid #bbb;
+      border-right:1px solid #aaa;
+      }
+    * html .btn span {
+      padding-top:0;
+      }
+    .btn span span {
+      position:relative;
+      padding:3px .4em;
+      border-width:0;
+      border-top:1px solid #bbb;
+      border-bottom:1px solid #aaa;
+      }
+    
+    /* pill classes only needed if using pill style buttons ( LEFT | CENTER | RIGHT ) */
+    button.pill-l span {
+      border-right-width:0;
+      }
+    button.pill-l span span {
+      border-right:1px solid #bbb;
+      }
+    button.pill-c span {
+      border-right-style:none;
+      border-left-color:#fff;
+      }
+    button.pill-c span span {
+      border-right:1px solid #bbb;
+      }
+    button.pill-r span {
+      border-left-color:#fff;
+      }
+    
+    /* only needed if implementing separate hover/focus/active state for buttons */
+    .btn:hover span, .btn:hover span span, .btn:focus span, .btn:focus span span {
+      cursor:pointer; /* important for any clickable/pressable element */
+      border-color:#9cf !important;
+      color:#000;
+      }
+    .btn:active span {
+      background-position:0 -400px;
+      outline:none;
+      }
+    .btn:focus, .btn:active {
+      outline:none; /* doesn't seem to be respected for <button>, only <a> */
+      }
+
+    /* use if one button should be the 'primary' button */
+    .primary {
+      font-weight:bold;
+      color:#000;
+      }

@@ -10,13 +10,16 @@ handlers:
 - url: /scripts
   static_dir: scripts
 
-- url: /download
-  static_dir: download
+- url: /downloads
+  static_dir: downloads
 
 - url: /favicon\.ico
   static_files: static/favicon.ico
   upload: static/favicon.ico
 
+- url: /foobar.html
+  static_files: foobar.html
+  upload: foobar.html
   
 - url: /admin
   script: admin.py
@@ -26,4 +29,17 @@ handlers:
   upload: robots.txt
 
 - url: /.*
-  script: isimplebin.py
+  script: main.py
+
+skip_files: |
+ ^(.*/)?(
+ (app\.yaml)|
+ (app\.yml)|
+ (index\.yaml)|
+ (index\.yml)|
+ (#.*#)|
+ (.*~)|
+ (.*\.py[co])|
+ (.*/RCS/.*)|
+ (\..*)|
+ )$

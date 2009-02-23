@@ -8,6 +8,17 @@
   <body onload="initPastebin()">
     <div id="Header"><h1> IsImplebIn </h1> </div>
     <div class="Content">
+            <center><script type="text/javascript"><!--
+	   google_ad_client = "pub-5703976649241693";
+	   /* Essentials Only */
+	   google_ad_slot = "4363471771";
+	   google_ad_width = 740;
+	   google_ad_height = 90;
+	   //-->
+	</script>
+	<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script> </center>
       <form method="post" enctype="multipart/form-data" action="/uploadaction">
         Enter file: <input type="file" name="sendfile" size="40">
 	<div id="expiryradios">
@@ -24,22 +35,22 @@
         <input type="submit" value="upload" name="submit">
       </form>
     </div>
-    <div id="navAlpha">
+    <div id="navBeta">
       <h2>Last 10 posts</h2>
       {{type}}
         <p>
        	  {% for post in posts %}
-  	    {% if post.author %}
-  	      <b> <a href= {{post.key.id}}> {{ post.author.nickname }} </a> </b> <br>
+  	    {% if post.author.user %}
+  	      <b> <a href= {{post.key.id}}> {{ post.author.user.nickname }} </a> </b> <br>
   	    {% else %}
   	       <b> <a href= {{post.key.id}}> Anonymous </a> </b> <br>
 	    {% endif %}
 	  {% endfor %}
         </p>
     </div>
-    <div id="navBeta">
+    <div id="navAlpha">
       <h2> <a href="upload"> Upload a file </a> </h2>
-      <h2> <a href="download/pasteit.tar.gz"> Command line isimplebin </a> </h2>
+      <h2> <a href="downloads/Pasteit.tar.gz"> Command line isimplebin </a> </h2>
       <h2> <a href="{{ url }}">{{ url_linktext }}</a> </h2>
     </div> 
     <div id="navBeta2">

@@ -15,20 +15,20 @@
         <div><input type="submit" value="Paste"></div>
       </form>
     </div>
-    <div id="navAlpha">
+    <div id="navBeta">
       <h2>Last 10 posts</h2>
       {{type}}
         <p>
        	  {% for post in posts %}
-  	    {% if post.author %}
-  	      <b> {{ post.author.nickname }} </b>
+  	    {% if post.author.user %}
+  	      <b> {{ post.author.user.nickname }} </b>
   	    {% else %}
   	      <b> anonymous</b> 
 	    {% endif %}
 	  {% endfor %}
       </p>
     </div>
-    <div id="navBeta">
+    <div id="navAlpha">
       <h2> stuff </h2>
     </div> 
   </body>

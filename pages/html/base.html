@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/style.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/code_styles.css" />
+    <title>{% block title %}Isimplebin{% endblock %}</title>
+    <script type="text/javascript" src="scripts/isimplebin.js"></script>      
+    <meta name="verify-v1" content="3NyvNilDoAnn3a9CAu5Kb2wMFgb5ooMhiD+BO8BU2D0=" />
+  </head>
+  <body{% block onload %} onload="initPastebin()" {% endblock %}>
+    <div id="Header">
+      <div id="leftbar">
+        {% block leftbar %}
+          <a href="/"> new post </a>
+          |
+          <a href="personal"> my pastes </a>
+          |
+          <a href="upload"> upload file </a>
+        {% endblock %}
+      </div>
+      <div id="rightbar">
+        {% block rightbar %}
+          login
+          |
+          <a href="help"> help </a>          
+        {% endblock %}
+      </div>      
+    </div>
+    <div class="all">
+      <div id="leftNav">
+        <b>Last 10 pastes</b>
+        <p>
+       	  {% for paste in pastes %}
+  	    {% if paste.author.user %}
+  	      <b> <a href= {{paste.paste_key}}> {{ paste.author.user.nickname }} </a> </b> <br>
+  	    {% else %}
+  	       <b> <a href= {{paste.paste_key}}> Anonymous </a> </b> <br>
+	    {% endif %}
+	  {% endfor %}
+        </p>     
+      </div>
+        <div id="rightNav">      
+        {% block rightNav %}
+          <script type="text/javascript"><!--
+            google_ad_client = "pub-5703976649241693";
+            /* Vertical Banner */
+            google_ad_slot = "4872979652";
+            google_ad_width = 120;
+            google_ad_height = 600;
+            //-->
+          </script>
+          <script type="text/javascript"
+                  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+          </script>
+        {% endblock %}
+      </div>
+      <div class="content">
+        <div class="inner_content">
+          {% block content %} fooo {% endblock %}
+	</div>        
+      </div>
+    </div>
+  </body>
+</html>

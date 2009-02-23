@@ -138,7 +138,7 @@ class Post(webapp.RequestHandler):
 
         if view:
             code = view.content
-            lines = view.content.split("\n")
+            lines = view.content.splitlines()
         else:
             code = ""
             lines = []
@@ -153,7 +153,7 @@ class Post(webapp.RequestHandler):
 
         template_values = {
             'posts' : posts,
-            'lines' : views,
+            'lines' : lines,
             'url' : url,
             'url_linktext' : url_linktext,
             'line': line,
@@ -166,6 +166,7 @@ class Post(webapp.RequestHandler):
             path = os.path.join(os.path.dirname(__file__), 'html/view.html')
         else :
             path = os.path.join(os.path.dirname(__file__), 'html/404.html')
+            self.error(404)
 
         self.response.out.write(template.render(path, template_values))
 

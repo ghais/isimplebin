@@ -1,4 +1,7 @@
+import cgi
+
 from pygments.formatters import HtmlFormatter
+
 
 class CodeHtmlFormatter(HtmlFormatter):
 
@@ -9,9 +12,12 @@ class CodeHtmlFormatter(HtmlFormatter):
         yield 0, '<ol class="highlight">'
         i = 1
         for i, t in source:
+            t = t.rstrip()
+            if t == "" or t.isspace():
+                t = "&nbsp;"
             if i == 1:
                 # it's a line of formatted code
-                t = '<li id="li_' + str(i) + '">' + t.rstrip() + "</li>"
+                t = '<li id="li_' + str(i) + '">' + t + "</li>"
                 i += 1
             yield i, t
         yield 0, '</ol>'
