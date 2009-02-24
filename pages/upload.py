@@ -32,23 +32,20 @@ class Upload(webapp.RequestHandler):
         
 class UploadAction(webapp.RequestHandler):
     def post(self):
-        post_model = Paste()
-        if users.get_current_user():
-            post_model.author = users.get_current_user()
 
 
-        post_expiry = self.request.get('expiry')
-
-        if post_expiry == 'd':
-            post_model.expiry = datetime.now()  + timedelta(days=1)
-        elif post_expiry == 'm':
-            post_model.expiry = datetime.now()  + timedelta(days=1)
+        expiry = self.request.get('expiry')
+        lexer = self.request.get('lexer')
+        
+        if expiry == 'd':
+            expiry = datetime.now()  + timedelta(days=1)
+        elif expiry == 'm':
+            expiry = datetime.now()  + timedelta(days=1)
         elif post_expiry == 'f':
-            post_model.expiry = None
+            expiry = None
 
-        post_model.content = self.request.get('sendfile')        
-        post_model.previous_content = None
-        post_model.modified = False
-        post_model.modifier = None
-        post_model.save()
-        self.redirect('/' + str(post_model.key().id()))
+        content = self.request.get('sendfile')        
+        
+        lexer = lexer.lower()
+        paste = model.insert(expiry, content, lexer)
+        self.redirect('/' + paste.paste_key)

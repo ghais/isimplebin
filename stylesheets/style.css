@@ -44,7 +44,7 @@ body>#Header {height : 30px;}
 	voice-family: "\"}\"";
 	voice-family:inherit;
 	width: auto;
-	min-width: 120
+	min-width: 120;
 	z-index : 0;
 }
 
@@ -77,6 +77,7 @@ body>#Header {height : 30px;}
 
 .inner_content {
 	position : relative;
+	width : 99%;
 	height : 99%;
 	background-color:#eee;
 	z-index: 3;
@@ -95,7 +96,7 @@ code { font-size:12px;width:99%;}
 	font-size:12px;
 	width:99%;
 	border: 2px solid #69748C;	
-	text-align : lef;
+	text-align : left;
 	
 }
 
@@ -128,6 +129,16 @@ code { font-size:12px;width:99%;}
   z-index: 3
 }
 
+select {
+      display:inline-block;
+      margin:0;
+      padding:3px 0;
+      border-width:0;
+      overflow:visible;
+      font:100%/1.2 Arial,Sans-serif;
+      text-decoration:none;
+      color:#333;
+}
 
 /* Start custom button CSS here
     ---------------------------------------- */

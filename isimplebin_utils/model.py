@@ -22,7 +22,7 @@ class Paste(db.Model):
     ip_address = db.StringProperty()
     tags = db.StringListProperty()
     content = db.TextProperty()
-
+    lexer = db.StringProperty()
     
     date = db.DateTimeProperty(auto_now_add=True)
     expiry = db.DateTimeProperty()
@@ -49,7 +49,7 @@ class Paste(db.Model):
     
 
         
-def insert(expiry, content, title=None, tags = [], ip_address=None):
+def insert(expiry, content, lexer = None, title=None, tags = [], ip_address=None):
     paste = Paste()
     paste_key = make_token()
     while Paste.all().filter("paste_key=", paste_key).fetch(1) != []:
@@ -69,6 +69,7 @@ def insert(expiry, content, title=None, tags = [], ip_address=None):
     paste.previous = None
     
     paste.is_original = True
+    paste.lexer = lexer.lower()
     paste.save()
     return paste
     
@@ -79,7 +80,7 @@ def get_recent_pastes(n = 10):
     return pastes.fetch(n)
 
 
-def update(paste_id, content, tags = [], ip_address = None):
+def update(paste_id, content, lexer = None, tags = [], ip_address = None):
     pastes = Paste.all().filter("paste_key =", paste_id).order('-date')    
     last_edit = pastes.get()
     
@@ -100,6 +101,7 @@ def update(paste_id, content, tags = [], ip_address = None):
     paste.ip_address = ip_address
     paste.content = content
     paste.previous = last_edit
+    paste.lexer = lexer.lower()
     paste.save()        
     
     return paste

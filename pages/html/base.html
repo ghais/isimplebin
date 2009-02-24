@@ -5,6 +5,7 @@
     <title>{% block title %}Isimplebin{% endblock %}</title>
     <script type="text/javascript" src="scripts/isimplebin.js"></script>      
     <meta name="verify-v1" content="3NyvNilDoAnn3a9CAu5Kb2wMFgb5ooMhiD+BO8BU2D0=" />
+    {% block custom_head %} {% endblock %}
   </head>
   <body{% block onload %} onload="initPastebin()" {% endblock %}>
     <div id="Header">

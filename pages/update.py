@@ -9,5 +9,6 @@ from isimplebin_utils import *
 
 class Update(webapp.RequestHandler):
     def post(self, paste_id):
-        model.update(paste_id, self.request.get('content'))
+        model.update(paste_id, self.request.get('content'), self.request.get('lexer'))
+        
         self.redirect('/' + paste_id)

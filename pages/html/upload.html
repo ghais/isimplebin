@@ -1,30 +1,117 @@
-<html>
-  <head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
-    <title> IsImplebIn </title>
-    <script type="text/javascript" src="scripts/isimplebin.js"></script>
-    <meta name="verify-v1" content="3NyvNilDoAnn3a9CAu5Kb2wMFgb5ooMhiD+BO8BU2D0=" />
-  </head>
-  <body onload="initPastebin()">
-    <div id="Header"><h1> IsImplebIn </h1> </div>
-    <div class="Content">
-            <center><script type="text/javascript"><!--
-	   google_ad_client = "pub-5703976649241693";
-	   /* Essentials Only */
-	   google_ad_slot = "4363471771";
-	   google_ad_width = 740;
-	   google_ad_height = 90;
-	   //-->
-	</script>
-	<script type="text/javascript"
-		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-	</script> </center>
-      <form method="post" enctype="multipart/form-data" action="/uploadaction">
-        Enter file: <input type="file" name="sendfile" size="40">
-	<div id="expiryradios">
-	  <label>How long should your post be retained?</label>
+{% extends "base.html" %}
+
+{% block rightbar %}
+    <a href="{{ url }}">{{ url_linktext }}</a>
+    |
+    <a href="help"> help </a>
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" action="/uploadaction">
+    <div id="Header">
+      <div id="leftbar">
+          Synatax highlighting
+          <select name="lexer" id="lexer">
+            <option selected="selected" >General</option>
+            <option>None</option>
+            <option>ActionScript</option>
+            <option>AppleScript</option>
+            <option>Assembly (various)</option>
+            <option>Boo</option>
+            <option>Befunge</option>
+        
+            <option>BrainFuck</option>
+            <option>C</option>
+            <option>C++</option>
+            <option>C#</option>
+            <option>Clojure</option>
+            <option>Common Lisp</option>
+            <option>D</option>
+        
+            <option>Delphi</option>
+            <option>Dylan</option>
+            <option>Erlang</option>
+            <option>Fortran</option>
+            <option>Haskell</option>
+        
+            <option>Io</option>
+            <option>Java</option>
+            <option>JavaScript</option>
+            <option>Logtalk</option>
+            <option>Lua</option>
+            <option>Matlab</option>
+        
+            <option>MiniD</option>
+            <option>MooCode</option>
+            <option>MuPad</option>
+            <option>OCaml</option>
+            <option>PHP</option>
+            <option>Perl</option>
+        
+            <option>Redcode</option>
+            <option>S, S-Plus, R</option>
+            <option>Scala</option>
+        
+            <option>Scheme</option>
+            <option>Smalltalk</option>
+            <option>Tcl</option>
+            <option>Visual Basic.NET</option>
+            <option disabled="disabled">--Template languages--</option>
+            <option>Cheetah templates</option>
+            <option>templates</option>
+            <option>ERB (Ruby templating)</option>
+            <option>Genshi</option>
+        
+            <option>Myghty</option>
+            <option>Mako</option>
+            <option>templates (PHP templating)</option>
+            <option>JSP (Java Server Pages)</option>
+        
+            <option disabled="disabled">--Other markup--</option>
+            <option>Apache config files</option>
+            <option>Bash shell scripts</option>
+            <option>BBCode</option>
+        
+            <option>CSS</option>
+            <option>Debian control files</option>
+            <option>Diff files</option>
+            <option>Gettext catalogs</option>
+            <option>Gnuplot script</option>
+            <option>Groff markup</option>
+        
+            <option>HTML</option>
+            <option>INI-style config files</option>
+            <option>IRC logs (irssi style)</option>
+            <option>Lighttpd config files</option>
+            <option>Makefiles</option>
+            <option>MoinMoin/Trac Wiki markup</option>
+        
+            <option>Nginx config files</option>
+            <option>POV-Ray scenes</option>
+            <option>Redcode</option>
+            <option>ReST</option>
+            <option>SQL, also MySQL, SQLite</option>
+            <option>Squid configuration</option>
+        
+            <option>TeX</option>
+            <option>tcsh</option>
+            <option>Vim Script</option>
+            <option>Windows batch files</option>
+            <option>XML</option>
+            <option>XSLT</option>
+        
+            <option>YAML</option> 
+          </select>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="who">
+      Enter file: <input type="file" name="sendfile" size="40">
+      <div id="expiryradios">
+        <label>How long should your paste be retained?</label>
 	  <br/>
-	  <input id="expiry_day" type="radio" value="d" name="expiry"/> 
+	  <input id="expiry_day" type="radio" value="d" name="expiry"/>
 	  <label id="expiry_day_label" class="" for="expiry_day">a day</label>
 	  <input id="expiry_month" type="radio" checked="checked" value="m" name="expiry"/>
 	  <label id="expiry_month_label" class="" for="expiry_month">a month</label>
@@ -32,29 +119,7 @@
 	  <label id="expiry_forever_label" class="current" for="expiry_forever">forever</label>
 	</div>
 	<div id="expiryinfo"></div>
-        <input type="submit" value="upload" name="submit">
+        <div><input type="submit" value="upload" name="submit"></div>	
       </form>
     </div>
-    <div id="navBeta">
-      <h2>Last 10 posts</h2>
-      {{type}}
-        <p>
-       	  {% for post in posts %}
-  	    {% if post.author.user %}
-  	      <b> <a href= {{post.key.id}}> {{ post.author.user.nickname }} </a> </b> <br>
-  	    {% else %}
-  	       <b> <a href= {{post.key.id}}> Anonymous </a> </b> <br>
-	    {% endif %}
-	  {% endfor %}
-        </p>
-    </div>
-    <div id="navAlpha">
-      <h2> <a href="upload"> Upload a file </a> </h2>
-      <h2> <a href="downloads/Pasteit.tar.gz"> Command line isimplebin </a> </h2>
-      <h2> <a href="{{ url }}">{{ url_linktext }}</a> </h2>
-    </div> 
-    <div id="navBeta2">
-      <h2> News</a> </h2>
-    </div> 
-  </body>
-</html>
+{% endblock %}

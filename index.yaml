@@ -29,14 +29,14 @@ indexes:
   - name: date
     direction: desc
 
-# Used 204 times in query history.
+# Used 359 times in query history.
 - kind: Paste
   properties:
   - name: is_original
   - name: date
     direction: desc
 
-# Used 31 times in query history.
+# Used 132 times in query history.
 - kind: Paste
   properties:
   - name: is_original
@@ -71,7 +71,7 @@ indexes:
   - name: paste_key
   - name: date
 
-# Used 170 times in query history.
+# Used 293 times in query history.
 - kind: Paste
   properties:
   - name: paste_key

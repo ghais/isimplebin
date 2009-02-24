@@ -40,7 +40,19 @@ class ViewPaste(webapp.RequestHandler):
             if lines[i].find("@@") != -1:
                 highlighted.append(i + 1)
         code = code.replace("@@", "")
-        code = highlight(code, PythonLexer(), CodeHtmlFormatter(hl_lines=highlighted))
+
+        try:
+            if paste.lexer == "none":
+                lexer = None
+            else:
+                lexer = get_lexer_by_name(paste.lexer)
+        except:
+            lexer = PythonLexer()
+
+        if lexer:
+            code = highlight(code, lexer, CodeHtmlFormatter(hl_lines=highlighted))
+        else:
+            code = '<pre>' + code + '</pre>'
         
         template_values = {
             'pastes' : pastes,
@@ -51,6 +63,7 @@ class ViewPaste(webapp.RequestHandler):
             'code' : code,
             'download_link' : "download/" + str(paste.key().id()) if paste else '',
             'original' : original,
+            'lexer' : paste.lexer.lower(),
         }
         
         if paste:

@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+{% block custom_head %}
+  <script type="text/javascript">
+      function setSelected(elemID) {
+        var elem =  document.getElementById(elemID);
+        elem.setAttribute('selected', 'selected');
+      }
+  </script>
+{% endblock %}
+
 {% block rightbar %}
     <a href="{{ url }}">{{ url_linktext }}</a>
     |
@@ -7,6 +16,7 @@
 {% endblock %}
 
 {% block content %}
+<form action="/update/{{paste.paste_key}}" method="post">
     <div id="Header">
       <div id="leftbar">
         
@@ -25,99 +35,78 @@
           <button type="button" class="btn" onclick="window.location = 'diff/{{paste.paste_key}}'">
             <span><span>Diff</span></span>
           </button>
-          <select>
-            <option selected="selected">General</option>
-            <option>None</option>
-            <option>ActionScript</option>
-            <option>AppleScript</option>
-            <option>Assembly (various)</option>
-            <option>Boo</option>
-            <option>Befunge</option>
-        
-            <option>BrainFuck</option>
-            <option>C</option>
-            <option>C++</option>
-            <option>C#</option>
-            <option>Clojure</option>
-            <option>Common Lisp</option>
-            <option>D</option>
-        
-            <option>Delphi</option>
-            <option>Dylan</option>
-            <option>Erlang</option>
-            <option>Fortran</option>
-            <option>Haskell</option>
-        
-            <option>Io</option>
-            <option>Java</option>
-            <option>JavaScript</option>
-            <option>Logtalk</option>
-            <option>Lua</option>
-            <option>Matlab</option>
-        
-            <option>MiniD</option>
-            <option>MooCode</option>
-            <option>MuPad</option>
-            <option>OCaml</option>
-            <option>PHP</option>
-            <option>Perl</option>
-        
-            <option>Redcode</option>
-            <option>S, S-Plus, R</option>
-            <option>Scala</option>
-        
-            <option>Scheme</option>
-            <option>Smalltalk</option>
-            <option>Tcl</option>
-            <option>Visual Basic.NET</option>
+          Syntax highlighting
+          <select name="lexer">
+            <option id="general">General</option>
+            <option id="none">None</option>
+            <option id="actionscript">ActionScript</option>
+            <option id="applescript">AppleScript</option>
+            <option id="assembly">Assembly</option>
+            <option id="bash">Bash</option>
+            <option id="boo">Boo</option>
+            <option id="befunge">Befunge</option>        
+            <option id="brainfuck">BrainFuck</option>
+            <option id="c">C</option>
+            <option id="c++">C++</option>
+            <option id="c#">C#</option>
+            <option id="clojure">Clojure</option>
+            <option id="lisp">Lisp</option>
+            <option id="d">D</option>        
+            <option id="delphi">Delphi</option>
+            <option id="dylan">Dylan</option>
+            <option id="erlang">Erlang</option>
+            <option id="fortran">Fortran</option>
+            <option id="haskell">Haskell</option>        
+            <option id="io">Io</option>
+            <option id="java">Java</option>
+            <option id="javascript">JavaScript</option>
+            <option id="logtalk">Logtalk</option>
+            <option id="lua">Lua</option>
+            <option id="matlab">Matlab</option>        
+            <option id="minid">MiniD</option>
+            <option id="moocode">MooCode</option>
+            <option id="mupad">MuPad</option>
+            <option id="ocaml">OCaml</option>
+            <option id="php">PHP</option>
+            <option id="perl">Perl</option>        
+            <option id="s">S</option>
+            <option id="s-plus">S-Plus</option>
+            <option id="r">R</option>
+            <option id="scala">Scala</option>
+            <option id="scheme">Scheme</option>
+            <option id="smalltalk">Smalltalk</option>
+            <option id="tcl">Tcl</option>
+            <option id="vb">VB</option>
             <option disabled="disabled">--Template languages--</option>
-            <option>Cheetah templates</option>
-            <option>templates</option>
-            <option>ERB (Ruby templating)</option>
-            <option>Genshi</option>
-        
-            <option>Myghty</option>
-            <option>Mako</option>
-            <option>templates (PHP templating)</option>
-            <option>JSP (Java Server Pages)</option>
-        
-          <option disabled="disabled">--Other markup--</option>
-            <option>Apache config files</option>
-            <option>Bash shell scripts</option>
-            <option>BBCode</option>
-        
-            <option>CSS</option>
-            <option>Debian control files</option>
-            <option>Diff files</option>
-            <option>Gettext catalogs</option>
-            <option>Gnuplot script</option>
-            <option>Groff markup</option>
-        
-            <option>HTML</option>
-            <option>INI-style config files</option>
-            <option>IRC logs (irssi style)</option>
-            <option>Lighttpd config files</option>
-            <option>Makefiles</option>
-            <option>MoinMoin/Trac Wiki markup</option>
-        
-            <option>Nginx config files</option>
-            <option>POV-Ray scenes</option>
-            <option>Redcode</option>
-            <option>ReST</option>
-            <option>SQL, also MySQL, SQLite</option>
-            <option>Squid configuration</option>
-        
-            <option>TeX</option>
-            <option>tcsh</option>
-            <option>Vim Script</option>
-            <option>Windows batch files</option>
-            <option>XML</option>
-            <option>XSLT</option>
-        
-            <option>YAML</option> 
+            <option id="templates">templates</option>
+            <option id="erb">ERB</option>
+            <option id="genshi">Genshi</option>        
+            <option id="nyghty">Myghty</option>
+            <option id="mako">Mako</option>
+            <option id="jsp">JSP</option>        
+            <option disabled="disabled">--Other markup--</option>
+            <option id="apache">Apache</option>        
+            <option id="css">CSS</option>
+            <option id="diff">Diff</option>
+            <option id="gnuplot">Gnuplot</option>
+            <option id="groff">Groff</option>        
+            <option id="html">HTML</option>
+            <option id="irc">IRC</option>
+            <option id="makefiles">Makefiles</option>        
+            <option id="redcode">Redcode</option>
+            <option id="rest">ReST</option>
+            <option id="sql">SQL</option>        
+            <option id="tex">TeX</option>
+            <option id="tcsh">tcsh</option>
+            <option id="xml">XML</option>
+            <option id="xslt">XSLT</option>      
+            <option id="yaml">YAML</option> 
+            <script type="text/javascript">
+              setSelected('{{lexer}}');
+          </script>
           </select>
           
-
+    
       </div>
     </div>
     <br>
@@ -151,7 +140,6 @@
       {{ code }}
     </div>
     <div class="code">
-      <form action="/update/{{paste.paste_key}}" method="post">
          <textarea id="code" class="codeedit" rows="12" cols="80" name="content">
 {% for line in lines %}{{line|escape}}
 {% endfor %}</textarea>

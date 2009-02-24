@@ -17,5 +17,7 @@ class Paste(webapp.RequestHandler):
             expiry = None
 
         content = self.request.get('content') 
-        paste = model.insert(expiry, content)        
+        lexer = self.request.get('lexer')
+        assert(lexer)
+        paste = model.insert(expiry, content, lexer)
         self.redirect('/' + str(paste.paste_key))
