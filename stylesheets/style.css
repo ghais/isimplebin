@@ -219,3 +219,7 @@ select {
       font-weight:bold;
       color:#000;
       }
+      
+.qrcode {
+ text-decoration : none;
+ }

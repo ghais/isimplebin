@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block custom_head %}
+  <link type="text/css" rel="stylesheet" href="/stylesheets/lightbox.css" />
   <script type="text/javascript">
       function setSelected(elemID) {
         var elem =  document.getElementById(elemID);
         elem.setAttribute('selected', 'selected');
       }
   </script>
+  <script type="text/javascript" src="scripts/prototype.js"></script>
+  <script type="text/javascript" src="scripts/scriptaculous.js?load=effects,builder"></script>
+  <script type="text/javascript" src="scripts/lightbox.js"></script>
 {% endblock %}
 
 {% block rightbar %}
@@ -35,6 +39,10 @@
           <button type="button" class="btn" onclick="window.location = 'diff/{{paste.paste_key}}'">
             <span><span>Diff</span></span>
           </button>
+          <a href="{{qr}}" rel="lightbox" class="qrcode"><button type="button" class="btn">
+            <span><span>QR Code</span></span>
+          </button>         </a>
+
           Syntax highlighting
           <select name="lexer">
             <option id="general">General</option>
@@ -104,9 +112,7 @@
             <script type="text/javascript">
               setSelected('{{lexer}}');
           </script>
-          </select>
-          
-    
+          </select>       
       </div>
     </div>
     <br>

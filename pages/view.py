@@ -1,5 +1,6 @@
 import os
 import logging
+import cgi 
 
 from google.appengine.ext import webapp
 from google.appengine.api import users
@@ -54,6 +55,10 @@ class ViewPaste(webapp.RequestHandler):
         else:
             code = '<pre>' + code + '</pre>'
         
+            
+        goole_charts_qrcode = "http://chart.apis.google.com/chart?chs=300x300&amp;cht=qr&amp;chl=%s&amp;choe=UTF-8" \
+                            %(cgi.escape(self.request.uri))
+
         template_values = {
             'pastes' : pastes,
             'paste' : paste,
@@ -64,6 +69,7 @@ class ViewPaste(webapp.RequestHandler):
             'download_link' : "download/" + str(paste.key().id()) if paste else '',
             'original' : original,
             'lexer' : paste.lexer.lower(),
+            'qr' : goole_charts_qrcode,
         }
         
         if paste:
