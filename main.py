@@ -24,7 +24,7 @@ application = webapp.WSGIApplication(
      ('/upload', pages.upload.Upload),
      ('/uploadaction', pages.upload.UploadAction),
      ('/download/([a-zA-Z0-9_-]+)', pages.download.Download),
-     ('/original/([a-zA-Z0-9_-]+)', pages.original.View),
+     ('/original/([a-zA-Z0-9_-]+)', pages.original.Download),
      ('/diff/([a-zA-Z0-9_-]+)', pages.diff.Diff),
      ('/mypastes', pages.personal.MyPastes),
      ('/([a-zA-Z0-9_-]+)', pages.view.ViewPaste),
